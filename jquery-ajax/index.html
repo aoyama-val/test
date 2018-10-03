@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jquery-ajax.html</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  <style>
+    html, body  { height: 100%; font-size: 14px; }
+    nav.navbar { background: #f8f8f8; color: #212529; border-bottom: 1px solid #e7e7e7; }
+    nav.navbar a { color: #212529; }
+    div.sidebar { float: left; width: 200px; height: 100%; background: #f8f8f8; }
+    div.sidebar_inside { margin: 6px 12px; }
+    div.content_wrapper { height: 100%; padding-left: 200px; }
+    div.content { padding-top: 6px; }
+    div.under_navbar { height: 100%; }
+    h1          { font-size: 24px; margin: 6px 0px; }
+  </style>
+
+  <script>
+    $(function() {
+    });
+
+    function hoge_onclick() {
+      $.getJSON('http://httpbin.org/get').then(function(res) {
+        console.log(res);
+        return $.getJSON('./moge.json');
+      }).then(function(res2) {
+        console.log("res2", res2);
+      }).catch(function(err) {
+        console.log("エラー");
+      });
+    }
+  </script>
+</head>
+<body>
+  <button onclick="hoge_onclick()">クリック</button>
+</body>
+</html>
+<!-- vim: set ts=2 sts=2 sw=2 expandtab list: -->

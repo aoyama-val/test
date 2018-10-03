@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index.html</title>
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKWRLe_CDEPJGRMvzu25viim0jHekxA5s"></script>
+
+  <style>
+    html, body  { height: 100%; font-size: 14px; }
+
+    #map {
+      width:100%;
+      height: 400px;
+    }
+  </style>
+
+  <script>
+    var map;
+    var initialCenter = {lat:35.7, lng:139.7};
+
+    function addYourLocationButton(map, marker) {
+      var controlDiv = document.createElement('div');
+
+      var firstChild = document.createElement('button');
+      firstChild.style.backgroundColor = '#fff';
+      firstChild.style.border = 'none';
+      firstChild.style.outline = 'none';
+      firstChild.style.width = '40px';
+      firstChild.style.height = '40px';
+      firstChild.style.borderRadius = '2px';
+      firstChild.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
+      firstChild.style.cursor = 'pointer';
+      firstChild.style.marginRight = '10px';
+      firstChild.style.padding = '0px';
+      firstChild.title = 'Your Location';
+      controlDiv.appendChild(firstChild);
+
+      var secondChild = document.createElement('div');
+      secondChild.style.margin = '2px';
+      secondChild.style.width = '36px';
+      secondChild.style.height = '36px';
+      secondChild.style.backgroundImage = 'url(https://maps.gstatic.com/tactile/mylocation/mylocation-sprite-2x.png)';
+      secondChild.style.backgroundSize = '360px 36px';
+      secondChild.style.backgroundPosition = '0px 0px';
+      secondChild.style.backgroundRepeat = 'no-repeat';
+      $(secondChild).addClass('you_location_img');
+      firstChild.appendChild(secondChild);
+
+      google.maps.event.addListener(map, 'dragend', function() {
+        $('.you_location_img').css('background-position', '0px 0px');
+      });
+
+      firstChild.addEventListener('click', function() {
+        var imgX = '0';
+        var animationInterval = setInterval(function(){
+          if(imgX == '-36') imgX = '0';
+          else imgX = '-36';
+          $('.you_location_img').css('background-position', imgX+'px 0px');
+        }, 500);
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function(position) {
+              var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+              marker.setPosition(latlng);
+              map.setCenter(latlng);
+              clearInterval(animationInterval);
+              $('.you_location_img').css('background-position', '-288px 0px');
+            }, function(err) {
+              console.log("getCurrentPosition Error:", err);
+              var message = '';
+              switch (err.code) {
+                case 1: // PERMISSION_DENIED
+                  message = '位置情報の利用が許可されていません。httpsで接続しているか、ブラウザの設定を確認してください。';
+                  break;
+                case 2: // POSITION_UNAVAILABLE
+                  message = '現在位置が取得できませんでした。ネットワークに接続されていることを確認してください。';
+                  break;
+                case 3:
+                  message = '接続がタイムアウトしました。通信環境の良い場所で再度お試しください。';
+                  break;
+                default:
+                  message = '現在地が取得できませんでした。通信環境の良い場所で再度お試しください。';
+                  break;
+              }
+              clearInterval(animationInterval);
+              $('.you_location_img').css('background-position', '-288px 0px');
+              alert(message);
+            }
+          );
+        } else {
+          clearInterval(animationInterval);
+          $('.you_location_img').css('background-position', '0px 0px');
+          alert('お使いのブラウザでは位置情報を取得できません。');
+        }
+      });
+
+      controlDiv.index = 1;
+      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
+    }
+
+    $(function() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: initialCenter
+      });
+      var myMarker = new google.maps.Marker({
+        map: map,
+        animation: google.maps.Animation.DROP,
+        position: initialCenter
+      });
+      addYourLocationButton(map, myMarker);
+    });
+  </script>
+</head>
+<body>
+  <div id="map"></div>
+</body>
+</html>
+<!-- vim: set ts=2 sts=2 sw=2 expandtab list: -->

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地図ツール</title>
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=キーを入れてください"></script>
+
+    <script>
+      var map;
+
+      $(function() {
+        var gmap_options = {
+          zoom: 15,
+          center: { lat: 35.7, lng: 139.7 },
+        };
+        map = new google.maps.Map(document.getElementById("gmap"), gmap_options);
+      });
+    </script>
+
+    <style>
+      html, body  { height: 100%; margin: 0; padding: 0; box-sizing: border-box; }
+      div#gmap { width: 100%; height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="gmap"></div>
+  </body>
+</html>
+<!-- vim: set ts=2 sts=2 sw=2 expandtab list: -->

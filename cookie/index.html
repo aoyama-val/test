@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>/srv/http/c.html</title>
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+
+    <style>
+      html, body  { height: 100%; }
+    </style>
+
+    <script>
+      $(function() {
+        $.cookie('moge', 'tongo', { expires: 7, path: '/coo' });
+        //$.cookie('moge', '12345', { expires: 7, path: '/moge' });
+        console.log("moge", $.cookie('moge'));
+        alert("moge = [" + $.cookie("moge") + "]");
+      });
+
+      function btn_onclick() {
+        alert("moge = [" + $.cookie("moge") + "]");
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="btn_onclick()">click</button>
+  </body>
+</html>

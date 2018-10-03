@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XMLHttpRequestのテスト</title>
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+
+  <style>
+    html, body  { height: 100%; font-size: 14px; }
+    nav.navbar { background: #f8f8f8; color: #212529; border-bottom: 1px solid #e7e7e7; }
+    nav.navbar a { color: #212529; }
+    div.sidebar { float: left; width: 200px; height: 100%; background: #f8f8f8; }
+    div.sidebar_inside { margin: 6px 12px; }
+    div.content_wrapper { height: 100%; padding-left: 200px; }
+    div.content { padding-top: 6px; }
+    div.under_navbar { height: 100%; }
+    h1          { font-size: 24px; margin: 6px 0px; }
+  </style>
+
+  <script>
+    function send() {
+      var xhr = new XMLHttpRequest();
+      var url = $('#url').val();
+      console.log("url = [" + url + "]");
+      xhr.open("GET", url, true);
+      xhr.onload = function (e) {
+        console.log("onload");
+        dumpXHR(xhr);
+      };
+      xhr.onerror = function (e) {
+        console.log("onerror");
+        dumpXHR(xhr);
+      };
+      xhr.onabort = function() {
+        console.log("onabort");
+        dumpXHR(xhr);
+      };
+      xhr.ontimeout = function() {
+        console.log("ontimeout");
+        dumpXHR(xhr);
+      };
+      xhr.send(null);
+    }
+
+    function dumpXHR(xhr) {
+      console.log("xhr", xhr);
+    }
+  </script>
+</head>
+<body>
+  <h1>XMLHttpRequestのテスト</h1>
+  <!--<input type="text" id="url" value="https://rmap-authasd.ekispert.jp/auth/api/init?api_key=&t=1535677569351" style="width:100%">-->
+  <input type="text" id="url" value="http://aosho235.com/test.php" style="width:100%">
+  <button onclick="send()">送信</button>
+</body>
+</html>
+<!-- vim: set ts=2 sts=2 sw=2 expandtab list: -->

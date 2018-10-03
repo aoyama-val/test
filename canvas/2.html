@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/srv/http/canvas/2.html</title>
+<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script type="text/javascript">
+
+  $(function() {
+    var canvas  = document.getElementById('canvas');
+    var ctx = canvas.getContext("2d");
+    var r = 50;
+    //ctx.shadowOffsetX = ctx.shadowOffsetY = r2 * 2;
+    //ctx.shadowBlur = blur;
+    //ctx.shadowColor = 'black';
+
+    ctx.beginPath();
+    // ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise)
+    ctx.arc(40, 100, 30, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.fill();
+
+    var box = createBox();
+    ctx.drawImage(box.canvas, 200, 200);
+  });
+
+  function createBox() {
+    var canvas = document.createElement('canvas');
+    canvas.width = 100;
+    canvas.height = 100;
+    var ctx = canvas.getContext("2d");
+    ctx.beginPath();
+    /* グラデーション領域をセット */
+    var grad  = ctx.createLinearGradient(0,0, 0,100);
+    /* グラデーション終点のオフセットと色をセット */
+    //grad.addColorStop(0  , 'rgb(192,  80,  77)');  // 赤
+    //grad.addColorStop(0.5, 'rgb(155, 187,  89)');  // 緑
+    //grad.addColorStop(1  , 'rgb(128, 100, 162)');  // 紫
+    grad.addColorStop(0.2  , 'blue');
+    grad.addColorStop(0.4  , 'cyan');
+    grad.addColorStop(0.6  , 'lime');
+    grad.addColorStop(0.8  , 'yellow');
+    grad.addColorStop(1.0  , 'red');
+    /* グラデーションをfillStyleプロパティにセット */
+    ctx.fillStyle = grad;
+    /* 矩形を描画 */
+    ctx.rect(0,0, 100,100);
+    ctx.fill();
+    return {
+      canvas: canvas,
+      ctx, ctx
+    }
+  }
+</script>
+<style>
+  body { background: #ffeeee; }
+</style>
+</head>
+<body>
+  <canvas id="canvas" width="500" height="500" style="border: 1px solid #ccc; position: abosolute; top: 0px; left: 0px;"></div>
+
+  <div>
+    ほげほげ
+    もげもげ
+  </div>
+</body>
+</html>
+<!-- vim: set ts=2 sts=2 sw=2 expandtab list: -->
