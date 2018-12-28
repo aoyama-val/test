@@ -1,0 +1,15 @@
+inside iframe
+
+<script>
+    window.onload = function() {
+        localStorage.setItem("lastAccessedTime", new Date().toISOString());
+
+        function receiveMessage(e) {
+            console.log("iframe received", e.data);
+            //if (e.origin! == "http://correct-domain.com") return;
+            var receiver = window.parent;
+            receiver.postMessage(localStorage.getItem("lastAccessedTime"), e.origin);
+        }
+        window.addEventListener('message', receiveMessage);
+    }
+</script>
